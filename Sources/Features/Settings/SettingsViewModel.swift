@@ -6,6 +6,7 @@ import Observation
 /// (voice options come straight from `AVSpeechSynthesisVoice` here rather than round-tripping
 /// through prefs).
 @Observable
+@MainActor
 final class SettingsViewModel {
     var ttsEnabled: Bool
     var selectedVoiceId: String?

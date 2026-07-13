@@ -19,6 +19,8 @@ final class AudioTests: XCTestCase {
         }
     }
 
+    // `RealAnnouncer` is `@MainActor`, so constructing and driving it must happen on the main actor.
+    @MainActor
     func testAnnouncerPlaysClipWithoutTTS() {
         // Isolated prefs store with TTS off → announce takes the synchronous clip path.
         let suite = "AnimalSpinTests.\(UUID().uuidString)"

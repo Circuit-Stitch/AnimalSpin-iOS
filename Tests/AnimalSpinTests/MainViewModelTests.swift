@@ -4,6 +4,11 @@ import XCTest
 /// Exercises the clip-selection seam offline: with a fake `Announcer` in place, no speech or
 /// audio engine is touched, so tapping an animal is a plain assertion. Ported from the Android
 /// `MainViewModelTest`.
+///
+/// `@MainActor`: `Announcer` is main-actor isolated, so the `FakeAnnouncer` is implicitly `@MainActor`
+/// via the protocol, and `MainViewModel` (also `@MainActor`) can only be driven from the main actor —
+/// so the whole test case is hoisted onto it.
+@MainActor
 final class MainViewModelTests: XCTestCase {
 
     private final class FakeAnnouncer: Announcer {

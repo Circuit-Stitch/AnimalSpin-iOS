@@ -31,9 +31,14 @@ xcrun devicectl device install app --device <UDID> <AnimalSpin.app>
 xcrun devicectl device process launch --device <UDID> com.circuitstitch.toys.animals
 ```
 
-**Toolchain:** Xcode 26.x, Swift 6 compiler in **Swift 5 language mode** (`SWIFT_VERSION = 5.0`,
-`SWIFT_STRICT_CONCURRENCY = minimal`) — chosen deliberately so the AVFoundation delegate callbacks
-don't fight strict-concurrency checking. Deployment target **iOS 17.0** (for the Observation
+**Toolchain:** Xcode 26.x, **Swift 6 language mode** (`SWIFT_VERSION = 6.0`,
+`SWIFT_STRICT_CONCURRENCY = complete`). The audio/view-model layer is `@MainActor`-isolated
+(`Announcer`, `RealAnnouncer`, `MainViewModel`, `SettingsViewModel`), so the single-thread
+invariant is compiler-proven rather than hand-asserted: a `@MainActor` class is implicitly
+`Sendable`, which satisfies the (now `Sendable`) `AVSpeechSynthesizerDelegate` conformance with no
+`@unchecked Sendable`. The two delegate callbacks are `nonisolated` (AVFoundation calls them
+off-main) and hop back via `DispatchQueue.main.async` + `MainActor.assumeIsolated`. Deployment
+target **iOS 17.0** (for the Observation
 framework `@Observable`, `NavigationStack`, String Catalogs, `scrollBounceBehavior`). Universal
 (iPhone + iPad), `TARGETED_DEVICE_FAMILY = 1,2`.
 
