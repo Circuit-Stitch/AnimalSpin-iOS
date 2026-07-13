@@ -53,6 +53,57 @@ final class SettingsScreenshotTests: XCTestCase {
         attach("03-Settings-after-select", app.screenshot())
     }
 
+    /// Every supported UI language → its `-AppleLocale` region. Settings is the one screen whose
+    /// text is fully localized, so we relaunch the app once per language and grab a fresh shot.
+    /// Order matches `CFBundleLocalizations` (en first for a reference capture).
+    private static let localesByLanguage: [(lang: String, region: String)] = [
+        ("en", "US"), ("ar", "SA"), ("de", "DE"), ("es", "ES"), ("fr", "FR"),
+        ("hi", "IN"), ("id", "ID"), ("it", "IT"), ("ja", "JP"), ("ko", "KR"),
+        ("nl", "NL"), ("pl", "PL"), ("pt", "BR"), ("ru", "RU"), ("th", "TH"),
+        ("tr", "TR"), ("vi", "VN"),
+    ]
+
+    /// Captures the Settings screen once per supported language (fresh defaults: TTS on, 100% /
+    /// 100%). Each attachment is named `Settings-<lang>` so `xcresulttool` exports one PNG per
+    /// locale for the App Store marketing frames. One test run per device (iPhone / iPad).
+    @MainActor
+    func testCaptureLocalizedSettings() throws {
+        // Optional `ONLY_LANGS=ar,de` env filter (passed via `TEST_RUNNER_ONLY_LANGS`) to
+        // re-capture a subset without re-shooting all 17 locales.
+        let only = ProcessInfo.processInfo.environment["ONLY_LANGS"]
+            .map { Set($0.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }) }
+        // `UITEST_LANDSCAPE=1` shoots landscape — the iPad App Store frames use a landscape mockup.
+        let landscape = ProcessInfo.processInfo.environment["UITEST_LANDSCAPE"] == "1"
+        for (lang, region) in Self.localesByLanguage where only?.contains(lang) ?? true {
+            let app = XCUIApplication()
+            // -startOnSettings jumps past the parental gate; the Apple* args force the UI language
+            // for this launch regardless of the simulator's own setting.
+            app.launchArguments = [
+                "-startOnSettings",
+                "-AppleLanguages", "(\(lang))",
+                "-AppleLocale", "\(lang)_\(region)",
+            ]
+            if landscape {
+                // Rotate the device to landscape *before* launch so the app reflows into its
+                // landscape layout on startup. Rotating after launch only rotates the captured
+                // bitmap, leaving a sideways portrait UI.
+                XCUIDevice.shared.orientation = .landscapeLeft
+            }
+            app.launch()
+
+            XCTAssertTrue(app.navigationBars.firstMatch.waitForExistence(timeout: 20),
+                          "[\(lang)] Settings screen never appeared")
+            // Wait for the form controls to render so sliders/labels are laid out before we shoot.
+            XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 10),
+                          "[\(lang)] Speak-animal-name toggle never appeared")
+
+            // In landscape, capture the physical screen (reflects the true device orientation);
+            // app.screenshot() can hand back a rotated portrait bitmap.
+            attach("Settings-\(lang)", landscape ? XCUIScreen.main.screenshot() : app.screenshot())
+            app.terminate()
+        }
+    }
+
     /// Prefer the stable accessibility identifier; fall back to matching the localized label
     /// (a navigation-link Picker's row label is "Voices" plus the selected value).
     private func findVoicesRow(in app: XCUIApplication) -> XCUIElement {
