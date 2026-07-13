@@ -33,6 +33,12 @@ extension Color {
             ? UIColor(white: 0.68, alpha: 1.0)   // ≈ #ADADAD on black ≈ 8:1
             : UIColor(white: 0.35, alpha: 1.0)   // ≈ #595959 on white ≈ 7:1, on #F2F2F7 ≈ 6.3:1
     })
+
+    /// The fixed launch-screen purple (#6200EE), used as the grid's cell placeholder before its
+    /// photo finishes decoding (see `AnimalImageStore`). Deliberately *not* appearance-aware: it
+    /// matches the universal `LaunchBackground` asset the storyboard uses, so a cell reads as the
+    /// launch screen dissolving into the photo rather than a flash of a different color.
+    static let launchBackground = Color(uiColor: .brandPurpleLight)
 }
 
 private extension UIColor {

@@ -5,6 +5,7 @@ import SwiftUI
 struct MainView: View {
     let onSettings: () -> Void
     @State private var viewModel = MainViewModel()
+    @State private var imageStore = AnimalImageStore()
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.verticalSizeClass) private var vSizeClass
 
@@ -13,6 +14,9 @@ struct MainView: View {
             grid(in: proxy.size)
         }
         .ignoresSafeArea()
+        // Warm the photo decode off-main as early as the grid appears, so the first frame paints
+        // (placeholders → photos) without a main-thread decode stall. Idempotent (see `start()`).
+        .task { imageStore.start() }
         .squareToUnlock(perform: onSettings)
         .toolbar(.hidden, for: .navigationBar)
     }
@@ -47,13 +51,17 @@ struct MainView: View {
 
     private func cell(_ animal: Animal, height: CGFloat) -> some View {
         Rectangle()
-            .fill(.clear)
+            // Purple placeholder until the photo's off-main decode lands (see `AnimalImageStore`),
+            // so the cell reads as the launch screen dissolving into the photo rather than a flash.
+            .fill(Color.launchBackground)
             .frame(maxWidth: .infinity)
             .frame(height: height)
             .overlay {
-                Image(animal.imageName)
-                    .resizable()
-                    .scaledToFill()   // ContentScale.Crop
+                if let image = imageStore.image(for: animal) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()   // ContentScale.Crop
+                }
             }
             .clipped()
             .contentShape(Rectangle())
