@@ -41,5 +41,4 @@ All audio and images have a free-to-use origin (Creative Commons or Public Domai
 [`asset-credits.csv`](asset-credits.csv). Source code is under the same license as the upstream
 project ([LICENSE](LICENSE)). Privacy policy: [PRIVACY.md](PRIVACY.md).
 
-If you own any audio or photo content here and want it removed, please open an issue or email
-kfalconer@gmail.com and it will be removed promptly.
+If you are the owner of any of the audio or photo content included in this project and wish that it be removed, please open an issue or <a href="mailto:dmca@circuitstitch.com?subject=Content takedown request for Animal Spin App!">send me an email</a> about it with proof of ownership and I'll have it removed promptly.
