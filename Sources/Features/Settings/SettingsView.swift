@@ -177,7 +177,7 @@ struct SettingsView: View {
             HStack(alignment: .center, spacing: 8) {
                 CircuitStitchLogo().frame(width: 56, height: 56)
                     .accessibilityHidden(true)
-                Text("Animal Spin\nby\nKyle Falconer\nCircuit Stitch\n2026")
+                Text("Animal Spin\n© Copyright 2026 Circuit Stitch")
                     .font(.footnote)
                     .lineSpacing(2)
                     .multilineTextAlignment(.center)
