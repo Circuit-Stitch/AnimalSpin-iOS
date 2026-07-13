@@ -16,7 +16,13 @@ protocol Announcer: AnyObject {
 /// plumbing (this is the design that fixed the Android app's old "Save does nothing" bug). The
 /// spoken language is resolved once at init and the phrase is always read in that language, so
 /// the voice and the text never disagree.
-final class RealAnnouncer: NSObject, Announcer {
+// `@unchecked Sendable`: the iOS SDK marks `AVSpeechSynthesizerDelegate` as `Sendable`, so adopting
+// it (below) makes the compiler treat this class as `Sendable` and flag its non-Sendable
+// `synthesizer` (and any future non-Sendable member). We opt out of the auto-check because we uphold
+// the invariant by hand: the engines and the pending pair are only ever touched on the main thread —
+// `announce`/`shutdown` are called from the main-thread `MainViewModel`, and the delegate callbacks
+// hop to main before reading any state (see the `AVSpeechSynthesizerDelegate` extension).
+final class RealAnnouncer: NSObject, Announcer, @unchecked Sendable {
     private let prefs: Preferences
     private let synthesizer = AVSpeechSynthesizer()
     private var player: AVAudioPlayer?
