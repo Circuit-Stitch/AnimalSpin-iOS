@@ -5,6 +5,8 @@ import SwiftUI
 struct MainView: View {
     let onSettings: () -> Void
     @State private var viewModel = MainViewModel()
+    @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.verticalSizeClass) private var vSizeClass
 
     var body: some View {
         GeometryReader { proxy in
@@ -15,17 +17,22 @@ struct MainView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
 
-    private func grid(in size: CGSize) -> some View {
-        // Columns = how many ~200pt cells fit across, min 2 — so cells stay finger-big. Phones
-        // get 2 fat columns; tablets get more.
-        let columns = max(Int(size.width / 200), 2)
-        let rows = max(Int((Double(Animal.allCases.count) / Double(columns)).rounded(.up)), 1)
-        let cellWidth = size.width / CGFloat(columns)
-        let fitHeight = size.height / CGFloat(rows)
+    /// True on a full-screen iPad canvas (both size classes regular). There every animal tiles the
+    /// screen at once; a phone — or a narrow iPad multitasking slice — keeps the taller, scrollable
+    /// big-cell layout instead.
+    private var fillsScreen: Bool { hSizeClass == .regular && vSizeClass == .regular }
 
-        // If square cells overflow the height by <15%, stretch to fill top-to-bottom (no gap or
-        // scroll); a bigger overflow (phones) stays square and scrolls.
-        let cellHeight = fitHeight >= cellWidth * 0.85 ? fitHeight : cellWidth
+    private func grid(in size: CGSize) -> some View {
+        let count = Animal.allCases.count
+        // iPad: tile the whole screen (a divisor of `count` columns → no blank cell, near-square
+        // photos). Phone: fat ~200pt columns that scroll. See `GridLayout`.
+        let columns = fillsScreen ? GridLayout.fillingColumns(for: size, count: count)
+                                  : GridLayout.scrollingColumns(forWidth: size.width)
+        let rows = max(Int((Double(count) / Double(columns)).rounded(.up)), 1)
+        let cellWidth = size.width / CGFloat(columns)
+
+        // iPad: even rows fill top-to-bottom with no gap or scroll. Phone: square, finger-big cells.
+        let cellHeight = fillsScreen ? size.height / CGFloat(rows) : cellWidth
         let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 0), count: columns)
 
         return ScrollView {

@@ -36,7 +36,7 @@ targets:
         CFBundleDisplayName: Animal Spin
         CFBundleShortVersionString: "1.1"
         CFBundleVersion: "3"
-        UILaunchScreen: {}
+        UILaunchStoryboardName: LaunchScreen
         UIStatusBarHidden: true
         UIViewControllerBasedStatusBarAppearance: false
         UIRequiresFullScreen: true
