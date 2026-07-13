@@ -81,6 +81,23 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.circuitstitch.toys.animals.tests
         GENERATE_INFOPLIST_FILE: YES
 
+  # UI-test bundle: drives the app in a separate runner process via the Accessibility APIs
+  # (XCUITest). Used to capture screenshots of any screen/locale/Dynamic-Type size headlessly and
+  # to regression-test parent-facing flows. Runs on the simulator with no signing; on a device it
+  # inherits the app's signing (team GDV76FJJZ5 + the PLA-acceptance caveat in CLAUDE.md).
+  AnimalSpinUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: Tests/AnimalSpinUITests
+    dependencies:
+      - target: AnimalSpin
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.circuitstitch.toys.animals.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: AnimalSpin
+
 schemes:
   AnimalSpin:
     build:
@@ -92,3 +109,4 @@ schemes:
       config: Debug
       targets:
         - AnimalSpinTests
+        - AnimalSpinUITests

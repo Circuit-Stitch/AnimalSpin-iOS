@@ -29,7 +29,7 @@ struct SettingsView: View {
                 // a confusing dead end (and read "unavailable" to VoiceOver).
                 if !viewModel.voiceOptions.isEmpty {
                     Section {
-                        voicePicker
+                        voiceNavigationRow
                     }
                 }
 
@@ -54,26 +54,34 @@ struct SettingsView: View {
         .navigationBarTitleDisplayMode(.large)   // prominent, readable title; back button = 2nd exit
     }
 
-    // MARK: - Voice picker (grouped by region, like the Android exposed dropdown)
+    // MARK: - Voice picker (a pushed, grouped selection list — like the Android exposed dropdown)
     //
-    // A navigation-link Picker: tapping pushes a grouped checkmark list. VoiceOver announces
-    // "Voices, <selected>, button"; Full Keyboard Access can focus and open it. Replaces the old
-    // custom `Menu` whose hand-built label VoiceOver read as disconnected fragments. Only shown
-    // when `voiceOptions` is non-empty (guarded by the caller).
+    // A NavigationLink row ("Voices … <selected> ›") pushes `VoiceListView`, a native inset-grouped
+    // List. We build the list by hand rather than use a `.navigationLink` Picker so the region group
+    // *headers* render as real grouped-list headers — small, gray, unmistakably not selectable —
+    // instead of the Picker's plain black rows that read as choices (the reported confusion, where
+    // "Australia" looked like a voice and the "Karen" below it was the real one). VoiceOver still
+    // announces the row as "Voices, <selected>, button"; Full Keyboard Access can focus it. Only
+    // shown when `voiceOptions` is non-empty (guarded by the caller).
 
-    private var voicePicker: some View {
-        Picker(selection: $viewModel.selectedVoiceId) {
-            ForEach(voiceGroups, id: \.region) { group in
-                Section(group.region) {
-                    ForEach(group.voices) { voice in
-                        Text(voice.label).tag(Optional(voice.id))
-                    }
-                }
-            }
+    private var voiceNavigationRow: some View {
+        NavigationLink {
+            VoiceListView(groups: voiceGroups, selection: $viewModel.selectedVoiceId)
         } label: {
-            Text(Cap(L("voices")))
+            HStack {
+                Text(Cap(L("voices")))
+                Spacer()
+                Text(selectedVoiceLabel)
+                    .foregroundStyle(Color.secondaryAA)   // trailing detail value, AA on the card
+                    .lineLimit(1)
+            }
         }
-        .pickerStyle(.navigationLink)
+        .accessibilityIdentifier("voicesPicker")   // stable hook for the UI-test screenshot harness
+    }
+
+    /// The currently-selected voice's label, shown as the row's trailing detail (e.g. "Karen").
+    private var selectedVoiceLabel: String {
+        viewModel.voiceOptions.first { $0.id == viewModel.selectedVoiceId }?.label ?? ""
     }
 
     private var voiceGroups: [(region: String, voices: [SettingsViewModel.VoiceOption])] {
@@ -190,6 +198,57 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.top, 8)
         }
+    }
+}
+
+/// The pushed voice-selection screen: a native inset-grouped list, one section per country, each
+/// row a selectable voice with a checkmark on the current choice. Tapping a row selects it and pops
+/// back (matching the old `.navigationLink` Picker's behavior). Rendered by hand so the country
+/// headers are unmistakably headers (gray caption above the card) — the fix for "the category looks
+/// like a voice."
+private struct VoiceListView: View {
+    let groups: [(region: String, voices: [SettingsViewModel.VoiceOption])]
+    @Binding var selection: String?
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        List {
+            ForEach(groups, id: \.region) { group in
+                Section {
+                    ForEach(group.voices) { voice in
+                        row(for: voice)
+                    }
+                } header: {
+                    Text(group.region)
+                }
+            }
+        }
+        .listStyle(.insetGrouped)
+        .navigationTitle(Cap(L("voices")))
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func row(for voice: SettingsViewModel.VoiceOption) -> some View {
+        let isSelected = voice.id == selection
+        return Button {
+            selection = voice.id
+            dismiss()
+        } label: {
+            HStack {
+                // Full-strength label color: a voice is a choice, not the gray header above it.
+                Text(voice.label)
+                    .foregroundStyle(Color.primary)
+                Spacer()
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.brandAccent)
+                }
+            }
+            .contentShape(Rectangle())   // whole row is the tap target, not just the text
+        }
+        // Read once as e.g. "Karen, selected, button"; the checkmark alone isn't announced.
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 }
 
