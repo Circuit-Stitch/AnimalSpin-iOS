@@ -25,7 +25,15 @@ final class SettingsViewModel {
 
         let options = Self.loadVoices(language: SpeechLanguage.resolved())
         self.voiceOptions = options
-        self.selectedVoiceId = prefs.selectedVoiceId ?? options.first?.id
+        // Only adopt the persisted id if it's actually one of the current options — otherwise a
+        // stale id (device language changed since Save, or the voice was uninstalled) would leave
+        // the Picker with no matching selection *and* get re-saved on Save, even though playback
+        // ignores it. Fall back to the first available voice, matching `RealAnnouncer`.
+        if let saved = prefs.selectedVoiceId, options.contains(where: { $0.id == saved }) {
+            self.selectedVoiceId = saved
+        } else {
+            self.selectedVoiceId = options.first?.id
+        }
     }
 
     func save() {
@@ -75,8 +83,10 @@ final class SettingsViewModel {
         let quality: String
         let name: String
 
-        /// Quality tag only when it's worth flagging — most default voices are "Standard".
-        var label: String { quality == "Standard" ? name : "\(name)  ·  \(quality)" }
+        /// Quality tag only when it's worth flagging — most default voices are "Standard". Uses a
+        /// comma (not a "·" glyph) so VoiceOver reads "Samantha, Enhanced" as a natural pause
+        /// rather than announcing "middle dot".
+        var label: String { quality == "Standard" ? name : "\(name), \(quality)" }
     }
 
     struct VoicePreset: Identifiable {

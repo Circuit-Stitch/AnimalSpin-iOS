@@ -24,5 +24,9 @@ struct RootView: View {
                     SettingsView(onDone: { showingSettings = false })
                 }
         }
+        // App-wide accent tuned for AA contrast in light *and* dark (see `Color.brandAccent`).
+        // Set here so the Settings controls and the nav-bar back button all inherit it; MainView
+        // has no tinted chrome, so this doesn't affect the photo grid.
+        .tint(.brandAccent)
     }
 }

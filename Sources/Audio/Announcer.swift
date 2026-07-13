@@ -24,10 +24,14 @@ final class RealAnnouncer: NSObject, Announcer {
     /// The language TTS speaks (device language when shipped + voiced, else English).
     private let language: String
 
-    /// Clip to play when a given utterance finishes, keyed by utterance identity — so a
-    /// *flushed* previous utterance (which fires `didCancel`, not `didFinish`) never plays its
-    /// clip. Touched only on the main thread (announce + delegate callbacks).
-    private var pendingClips: [ObjectIdentifier: AnimalSound] = [:]
+    /// The one utterance whose completion is allowed to trigger a clip, plus that clip. A new tap
+    /// replaces this pair, so a *superseded* utterance can never play its clip over the new intro.
+    /// We can't trust `stopSpeaking` to reliably deliver `didCancel` (AVFoundation sometimes fires
+    /// `didFinish` for a flushed utterance, or delivers it late), so the guard is identity on this
+    /// pair — not the delegate callback kind. Touched only on the main thread (announce, shutdown,
+    /// and the main-dispatched delegate callbacks).
+    private var pendingUtterance: AVSpeechUtterance?
+    private var pendingClip: AnimalSound?
 
     init(prefs: Preferences = Preferences()) {
         self.prefs = prefs
@@ -40,7 +44,18 @@ final class RealAnnouncer: NSObject, Announcer {
         // Take audio focus now (not at launch), and recover a session the system deactivated
         // after an interruption — so every tap reliably makes sound.
         AudioSession.activate()
+
+        // Silence whatever the previous tap started — the recorded clip *and* any in-flight
+        // speech — so a rapid re-tap restarts the intro cleanly instead of layering sounds.
+        // Dropping the pending pair here means a superseded utterance's late `didFinish` finds no
+        // match and never plays its clip (the barking-over-the-voice bug).
         player?.stop()
+        // Flush unconditionally: `stopSpeaking` on an idle synthesizer is a documented no-op, and
+        // flushing every tap guarantees a rapid re-tap cuts off and *restarts* the intro rather
+        // than queueing a second one behind the first.
+        synthesizer.stopSpeaking(at: .immediate)
+        pendingUtterance = nil
+        pendingClip = nil
 
         // TTS intro disabled by the parent → skip straight to the clip.
         guard prefs.ttsEnabled else {
@@ -48,17 +63,14 @@ final class RealAnnouncer: NSObject, Announcer {
             return
         }
 
-        // Flush any in-flight speech. This fires `didCancel` for it, dropping its pending clip
-        // so only the newest tap's clip ever plays.
-        synthesizer.stopSpeaking(at: .immediate)
-
         let phrase = Localization.phrase(sound.animal.ttsKey, language: language)
         let utterance = AVSpeechUtterance(string: phrase)
         utterance.rate = SpeechTuning.rate(forSpeedMultiplier: prefs.voiceSpeed)
         utterance.pitchMultiplier = SpeechTuning.pitchMultiplier(for: prefs.voicePitch)
         utterance.voice = resolvedVoice()
 
-        pendingClips[ObjectIdentifier(utterance)] = sound
+        pendingUtterance = utterance
+        pendingClip = sound
         Log.tts.debug("speak \(phrase, privacy: .public)")
         synthesizer.speak(utterance)
     }
@@ -67,7 +79,8 @@ final class RealAnnouncer: NSObject, Announcer {
         synthesizer.stopSpeaking(at: .immediate)
         player?.stop()
         player = nil
-        pendingClips.removeAll()
+        pendingUtterance = nil
+        pendingClip = nil
     }
 
     /// Only honour a saved voice from the language we're speaking — otherwise a leftover voice
@@ -101,12 +114,22 @@ final class RealAnnouncer: NSObject, Announcer {
 
 extension RealAnnouncer: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        if let sound = pendingClips.removeValue(forKey: ObjectIdentifier(utterance)) {
-            playClip(sound)
+        // These callbacks aren't guaranteed on the main thread; hop there so reading/mutating the
+        // pending pair never races with `announce`. Only the *current* utterance plays its clip —
+        // a superseded one (a rapid re-tap already moved the pending pair on) is dropped.
+        DispatchQueue.main.async { [weak self] in
+            guard let self, utterance === self.pendingUtterance, let sound = self.pendingClip else { return }
+            self.pendingUtterance = nil
+            self.pendingClip = nil
+            self.playClip(sound)
         }
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        pendingClips.removeValue(forKey: ObjectIdentifier(utterance))
+        DispatchQueue.main.async { [weak self] in
+            guard let self, utterance === self.pendingUtterance else { return }
+            self.pendingUtterance = nil
+            self.pendingClip = nil
+        }
     }
 }

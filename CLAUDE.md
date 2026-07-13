@@ -79,8 +79,12 @@ animal → if TTS is enabled, speak the localized name, then on the synthesizer'
 the clip; if TTS is disabled, skip straight to the clip. Settings are re-read from prefs on every
 `announce`, so a change saved in Settings takes effect immediately with no lifecycle plumbing (the
 design that fixed the Android app's old "Save does nothing" bug). A new tap flushes the previous
-utterance (`stopSpeaking(.immediate)`); clips are keyed to their utterance so a *flushed* utterance
-(which fires `didCancel`) never plays its clip.
+utterance (`stopSpeaking(.immediate)`) *and* stops the current clip. Only the single newest
+`pendingUtterance`/`pendingClip` pair may play a clip: a superseded utterance whose `didFinish`
+arrives late finds no identity match and is dropped — so a rapid re-tap restarts the intro cleanly
+instead of the previous clip barking over the new voice. (We can't rely on `didCancel` firing for a
+flushed utterance; AVFoundation sometimes delivers `didFinish` instead.) Delegate callbacks hop to
+the main thread so this pending state never races with `announce`.
 
 **TTS voice handling.** `SpeechLanguage.resolved()` picks the spoken language: the device language
 when we ship a translation for it AND an installed voice can speak it, else English — matching the
