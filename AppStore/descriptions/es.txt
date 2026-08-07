@@ -1,0 +1,33 @@
+# [promo text]
+Toca un animal, oye su nombre y un sonido real grabado. 24 animales, 17 idiomas. 100% sin conexión. Sin anuncios, rastreo, cuentas ni IA. Toca, escucha y aprende.
+
+
+# [keywords]
+bebé,niños,granja,zoo,mascotas,sonidos,preescolar,educativo,primeras palabras,animales,guardería
+
+
+# [description]
+Animal Spin es una app sencilla y tranquila, pensada para los más pequeños. Toca un animal y tu hijo oirá su nombre en voz alta, seguido de un sonido de animal real grabado. Eso es toda la app. Sin menús en los que perderse, sin puntuaciones, sin contenido generado por IA. Toca, escucha y aprende.
+
+HECHA PARA PEQUES (o para quien actúa como uno)
+• 24 animales simpáticos, desde la granja (vaca, cerdo, oveja, pato, caballo) hasta la naturaleza salvaje (león, tigre, lobo, mono) y más allá (búho, rana, cigarra, pavo real)
+• Primero el nombre, luego el sonido. Cada animal dice su nombre, seguido de una de varias grabaciones reales, así que suena distinto en cada toque.
+• Entre 3 y 10 sonidos por animal
+• Imágenes grandes y vivas en dos columnas anchas en el iPhone, y más en el iPad. Fáciles de tocar para manos pequeñas, difíciles de romper.
+
+SEGURA POR DISEÑO
+• 100% sin conexión. Nunca necesita internet. La app no hace ninguna petición de red.
+• Cada sonido revisado individualmente por una persona por su calidad y contenido
+• Sin anuncios, sin ventanas emergentes, sin compras dentro de la app
+• Sin rastreo, sin analíticas, sin recopilación de datos
+• Sin cuentas y sin registros
+
+HAZLA TUYA
+• Zona de ajustes oculta para los padres: solo dibuja un cuadrado con el dedo.
+• Ajusta la velocidad y el tono de la voz.
+• Elige entre las voces disponibles en tu dispositivo.
+• Activa o desactiva los nombres de los animales hablados.
+
+Animal Spin es de código abierto, y sus sonidos e imágenes provienen de fuentes de Creative Commons y de dominio público.
+
+Perfecta para jugar juntos padres e hijos, para viajes en coche o para unos minutos de aprendizaje. Descárgala una vez y funciona en cualquier lugar.

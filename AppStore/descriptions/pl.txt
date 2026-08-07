@@ -1,0 +1,33 @@
+# [promo text]
+Dotknij zwierzątka, usłysz nazwę, potem prawdziwy nagrany dźwięk. 24 zwierzęta, 17 języków. 100% offline. Bez reklam, śledzenia, kont i AI. Dotknij, słuchaj i ucz się.
+
+
+# [keywords]
+niemowlę,maluch,farma,zoo,zwierzęta,dźwięki,przedszkole,edukacyjne,pierwsze słowa,odgłosy
+
+
+# [description]
+Animal Spin to prosta, spokojna aplikacja stworzona dla najmłodszych. Dotknij zwierzątka, a Twoje dziecko usłyszy jego nazwę wypowiedzianą na głos, a po niej prawdziwy nagrany odgłos zwierzęcia. To cała aplikacja. Bez menu, w których można się zgubić, bez punktów, bez treści generowanych przez AI. Dotknij, słuchaj i ucz się.
+
+STWORZONA DLA MALUCHÓW (albo dla tych, którzy zachowują się jak maluchy)
+• 24 sympatyczne zwierzęta, od farmy (krowa, świnia, owca, kaczka, koń) po dziką przyrodę (lew, tygrys, wilk, małpa) i dalej (sowa, żaba, cykada, paw)
+• Najpierw nazwa, potem dźwięk. Każde zwierzę wypowiada swoją nazwę, a po niej odtwarza jedno z kilku prawdziwych nagrań, więc przy każdym dotknięciu brzmi inaczej.
+• Od 3 do 10 dźwięków na zwierzę
+• Duże, kolorowe obrazki w dwóch szerokich kolumnach na iPhonie, więcej na iPadzie. Łatwe do dotknięcia dla małych rączek, trudne do zepsucia.
+
+BEZPIECZNA Z ZAŁOŻENIA
+• 100% offline. Nigdy nie wymaga połączenia z internetem. Aplikacja nie wysyła żadnych żądań sieciowych.
+• Każdy dźwięk sprawdzony indywidualnie przez człowieka pod kątem jakości i treści
+• Bez reklam, bez wyskakujących okienek, bez zakupów w aplikacji
+• Bez śledzenia, bez analityki, bez zbierania danych
+• Bez kont i bez rejestracji
+
+DOSTOSUJ JĄ DO SIEBIE
+• Ukryty obszar ustawień dla rodziców — wystarczy narysować palcem kwadrat.
+• Dostosuj tempo i wysokość głosu.
+• Wybierz spośród głosów dostępnych na Twoim urządzeniu.
+• Włącz lub wyłącz wypowiadane nazwy zwierząt.
+
+Animal Spin jest oprogramowaniem open source, a jej dźwięki i obrazy pochodzą ze źródeł Creative Commons i domeny publicznej.
+
+Idealna do wspólnej zabawy rodzica z dzieckiem, na podróże samochodem lub na kilka minut nauki. Pobierz raz i działa wszędzie.

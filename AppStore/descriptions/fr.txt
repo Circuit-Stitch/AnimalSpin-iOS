@@ -1,0 +1,33 @@
+# [promo text]
+Touchez un animal : son nom, puis un vrai son enregistré. 24 animaux, 17 langues. 100% hors ligne. Ni pub, ni pistage, ni compte, ni IA. Touchez, écoutez, apprenez.
+
+
+# [keywords]
+bébé,tout-petit,ferme,zoo,animaux,sons,maternelle,éducatif,premiers mots,imagier,crèche
+
+
+# [description]
+Animal Spin est une application simple et douce, conçue pour les tout-petits. Touchez un animal et votre enfant entend son nom prononcé à voix haute, suivi d'un vrai son d'animal enregistré. C'est toute l'application. Pas de menus où se perdre, pas de scores, pas de contenu généré par IA. Touchez, écoutez, apprenez.
+
+CONÇUE POUR LES TOUT-PETITS (ou ceux qui agissent comme tels)
+• 24 animaux sympathiques, de la ferme (vache, cochon, mouton, canard, cheval) à la savane (lion, tigre, loup, singe) et au-delà (hibou, grenouille, cigale, paon)
+• Le nom d'abord, puis le son. Chaque animal dit son nom, suivi de l'un de plusieurs enregistrements réels, pour que ce soit différent à chaque fois.
+• Entre 3 et 10 sons par animal
+• De grandes images colorées sur deux larges colonnes sur iPhone, et plus sur iPad. Faciles à toucher pour les petites mains, difficiles à casser.
+
+SÛRE PAR CONCEPTION
+• 100% hors ligne. Aucune connexion internet requise, jamais. L'application ne fait aucune requête réseau.
+• Chaque son vérifié individuellement par un humain pour sa qualité et son contenu
+• Sans publicité, sans fenêtres pop-up, sans achats intégrés
+• Sans pistage, sans analyse, sans collecte de données
+• Sans compte et sans inscription
+
+PERSONNALISEZ-LA
+• Zone de réglages cachée pour les parents : dessinez simplement un carré avec le doigt.
+• Réglez la vitesse et la hauteur de la voix.
+• Choisissez parmi les voix disponibles sur votre appareil.
+• Activez ou désactivez les noms d'animaux prononcés.
+
+Animal Spin est open source, et ses sons et images proviennent de sources Creative Commons et du domaine public.
+
+Parfaite pour jouer ensemble parent et enfant, pour les trajets en voiture ou pour quelques minutes d'apprentissage. Téléchargez-la une fois et elle fonctionne partout.

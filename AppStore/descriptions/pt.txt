@@ -1,0 +1,33 @@
+# [promo text]
+Toque num animal, ouça o nome e depois um som real gravado. 24 animais, 17 idiomas. 100% offline. Sem anúncios, rastreamento, contas ou IA. É só tocar, ouvir e aprender.
+
+
+# [keywords]
+bebê,criança,fazenda,zoológico,pets,sons,pré-escola,educativo,primeiras palavras,animais
+
+
+# [description]
+Animal Spin é um app simples e tranquilo, feito para os menores. Toque num animal e seu filho ouve o nome falado em voz alta, seguido de um som de animal real gravado. É o app inteiro. Sem menus para se perder, sem pontuações, sem conteúdo gerado por IA. É só tocar, ouvir e aprender.
+
+FEITO PARA CRIANÇAS PEQUENAS (ou para quem age como uma)
+• 24 animais simpáticos, da fazenda (vaca, porco, ovelha, pato, cavalo) à natureza selvagem (leão, tigre, lobo, macaco) e além (coruja, sapo, cigarra, pavão)
+• Primeiro o nome, depois o som. Cada animal diz o próprio nome, seguido de uma de várias gravações reais, então fica diferente a cada toque.
+• Entre 3 e 10 sons por animal
+• Imagens grandes e coloridas em duas colunas largas no iPhone, e mais no iPad. Fáceis de tocar para mãozinhas pequenas, difíceis de quebrar.
+
+SEGURO POR DESIGN
+• 100% offline. Nunca precisa de conexão com a internet. O app não faz nenhuma requisição de rede.
+• Cada som verificado individualmente por uma pessoa quanto à qualidade e ao conteúdo
+• Sem anúncios, sem pop-ups, sem compras dentro do app
+• Sem rastreamento, sem análises, sem coleta de dados
+• Sem contas e sem cadastros
+
+DEIXE DO SEU JEITO
+• Área de ajustes escondida para os pais: basta desenhar um quadrado com o dedo.
+• Ajuste a velocidade e o tom da voz.
+• Escolha entre as vozes disponíveis no seu dispositivo.
+• Ative ou desative os nomes dos animais falados.
+
+Animal Spin é de código aberto, e seus sons e imagens vêm de fontes Creative Commons e de domínio público.
+
+Perfeito para brincar junto, pais e filhos, para viagens de carro ou para alguns minutos de aprendizado. Baixe uma vez e funciona em qualquer lugar.

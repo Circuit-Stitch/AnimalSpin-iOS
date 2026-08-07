@@ -1,0 +1,33 @@
+# [promo text]
+Tap an animal, hear its name, then a real recorded sound. 24 animals, 17 languages. 100% offline. No ads, no tracking, no accounts, no AI. Just tap, listen, and learn.
+
+
+# [keywords]
+baby,toddler,farm,zoo,pets,noises,preschool,educational,first words,flashcards,nursery
+
+
+# [description]
+Animal Spin is a simple, gentle app made for the youngest kids. Tap an animal and your child hears its name spoken aloud, followed by a real recorded animal sound. That's the whole app. No menus to get lost in, no scores, no AI-generated content. Just tap, listen, and learn.
+
+MADE FOR TODDLERS (or people who act like toddlers)
+• 24 friendly animals, from the farm (cow, pig, sheep, duck, horse) to the wild (lion, tiger, wolf, monkey) and beyond (owl, frog, cicada, peacock)
+• Name first, then the sound. Every animal gets its name spoken, followed by one of several real recordings, so it stays fresh on every tap.
+• Between 3 and 10 sounds per animal
+• Big, bright pictures in two wide columns on iPhone, more on iPad. Easy for little hands to tap, hard to break.
+
+SAFE BY DESIGN
+• 100% offline. No internet connection required, ever. The app makes no network requests at all.
+• Each sound verified individually by a human for quality and content
+• No ads, no pop-ups, no in-app purchases
+• No tracking, no analytics, no data collection
+• No accounts and no sign-ups
+
+MAKE IT YOUR OWN
+• Hidden settings area for parents, just draw a square with your finger.
+• Adjust the voice's speed and pitch.
+• Pick from the voices available on your device.
+• Turn the spoken animal names on or off.
+
+Animal Spin is open source, and its sounds and images come from Creative Commons and public-domain sources.
+
+Perfect for parent-child joint play time, car rides, or a few minutes of learning. Download once and it works anywhere.
