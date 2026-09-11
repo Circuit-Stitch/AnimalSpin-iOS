@@ -1,0 +1,18 @@
+// Shared.xcconfig — settings that apply to every target and every configuration.
+//
+// Included by Debug.xcconfig and Release.xcconfig, which the project assigns as its
+// project-level configuration files. Target-level .xcconfig files add to these.
+
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+
+SWIFT_VERSION = 6.0
+SWIFT_STRICT_CONCURRENCY = complete
+
+// Signing. Team GDV76FJJZ5 is the com.circuitstitch.* organization.
+DEVELOPMENT_TEAM = GDV76FJJZ5
+CODE_SIGN_STYLE = Automatic
+
+// App Store version numbers. MARKETING_VERSION is the user-visible version and
+// CURRENT_PROJECT_VERSION is the build number.
+MARKETING_VERSION = 1.1
+CURRENT_PROJECT_VERSION = 3

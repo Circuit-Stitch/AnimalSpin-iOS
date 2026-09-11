@@ -1,0 +1,5 @@
+// Debug.xcconfig — the project-level configuration file for the Debug configuration.
+//
+// Debug-only settings go here. Everything shared lives in Shared.xcconfig.
+
+#include "Shared.xcconfig"

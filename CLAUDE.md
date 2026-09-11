@@ -12,11 +12,28 @@ clips. This is a from-scratch iOS port of the Android app at `~/Code/AnimalSpin`
 
 ## Commands
 
-The Xcode project is **generated** from `project.yml` by [XcodeGen](https://github.com/yonaskolb/XcodeGen)
-(`brew install xcodegen`). `AnimalSpin.xcodeproj` is git-ignored — regenerate it, don't edit it.
+`AnimalSpin.xcodeproj` is checked in and built from directly. Add a new source file through Xcode,
+or by editing the project file, and commit the change with the file.
+
+Build settings live in `Config/*.xcconfig`, not in the project file:
+
+| File                                | Applies to                        |
+|-------------------------------------|-----------------------------------|
+| `Config/Shared.xcconfig`            | every target, every configuration |
+| `Config/Debug.xcconfig`             | the project, Debug only           |
+| `Config/Release.xcconfig`           | the project, Release only         |
+| `Config/AnimalSpin.xcconfig`        | the app target                    |
+| `Config/AnimalSpinTests.xcconfig`   | the unit-test bundle              |
+| `Config/AnimalSpinUITests.xcconfig` | the UI-test bundle                |
+
+Debug.xcconfig and Release.xcconfig each `#include` Shared.xcconfig. Change a setting in the
+xcconfig file, not in Xcode's build-settings editor; a value set in the editor lands in the project
+file and silently overrides the xcconfig.
+
+`Support/Info.plist` is also checked in. The app target sets `GENERATE_INFOPLIST_FILE = NO` and
+reads that file.
 
 ```bash
-xcodegen generate                 # (re)generate AnimalSpin.xcodeproj from project.yml — run after adding/removing files
 # build for a simulator
 xcodebuild -project AnimalSpin.xcodeproj -scheme AnimalSpin \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build

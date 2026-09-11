@@ -1,0 +1,9 @@
+// AnimalSpinUITests.xcconfig — settings for the UI-test bundle, in every configuration.
+
+PRODUCT_BUNDLE_IDENTIFIER = com.circuitstitch.toys.animals.uitests
+
+// Xcode synthesizes the test bundle's Info.plist; there is no file to check in.
+GENERATE_INFOPLIST_FILE = YES
+
+// The app the runner launches and drives.
+TEST_TARGET_NAME = AnimalSpin
