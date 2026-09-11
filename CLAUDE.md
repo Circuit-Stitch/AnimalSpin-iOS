@@ -146,6 +146,11 @@ Re-run it after changing the Android source of truth: `python3 tools/gen_assets.
 active animal set straight from `Animals.kt`, so commented-out ("on ice"/"ponytail") animals are
 excluded automatically.
 
+The generator writes files. It does not add them to the project. `AnimalSpin.xcodeproj` is committed
+and names all 172 clips and every image explicitly, so a regenerated asset set has to be added to
+the project too. Do that in Xcode, or edit the pbxproj by hand. A file that is only on disk does not
+ship, and the build still succeeds.
+
 ## Testing
 
 `Tests/AnimalSpinTests` (XCTest, hosted in the app so bundle resources resolve): catalog integrity

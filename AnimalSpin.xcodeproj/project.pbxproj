@@ -875,6 +875,7 @@
 					DDE86D18315D1B58F9AA5956 = {
 						DevelopmentTeam = GDV76FJJZ5;
 						ProvisioningStyle = Automatic;
+						TestTargetID = EA1B3CAACC733E3360A6574C;
 					};
 					EA1B3CAACC733E3360A6574C = {
 						DevelopmentTeam = GDV76FJJZ5;
