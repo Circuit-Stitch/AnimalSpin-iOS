@@ -21,16 +21,19 @@ of the [Android Animal Spin app](https://github.com/Circuit-Stitch/AnimalSpin).
 ## Requirements
 
 - Xcode 26+ / iOS 17+
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
 
 ## Build & run
 
+`AnimalSpin.xcodeproj` is checked in. Clone and open it; there is no generation step.
+
 ```bash
-xcodegen generate     # generate AnimalSpin.xcodeproj from project.yml
 open AnimalSpin.xcodeproj
 # or from the CLI:
 xcodebuild -scheme AnimalSpin -destination 'platform=iOS Simulator,name=iPhone 17 Pro' test
 ```
+
+Build settings live in `Config/*.xcconfig`. Edit those files rather than the Xcode build-settings
+editor, so the values stay readable in a diff.
 
 See [CLAUDE.md](CLAUDE.md) for the full architecture, the `tools/gen_assets.py` asset pipeline,
 and build/signing notes.
